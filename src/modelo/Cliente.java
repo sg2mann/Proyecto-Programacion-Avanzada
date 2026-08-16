@@ -25,43 +25,31 @@ public class Cliente
         this.correo = correo;
     }
 
-    public String getRut()
-    {
+    public String getRut() {
         return rut;
     }
-
-    public void setRut(String rut)
-    {
+    public void setRut(String rut) {
         this.rut = rut;
     }
 
-    public String getNombre()
-    {
+    public String getNombre() {
         return nombre;
     }
-
-    public void setNombre(String nombre)
-    {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public int getNumeroTelefono()
-    {
+    public int getNumeroTelefono() {
         return numeroTelefono;
     }
-
-    public void setNumeroTelefono(int numeroTelefono)
-    {
+    public void setNumeroTelefono(int numeroTelefono) {
         this.numeroTelefono = numeroTelefono;
     }
 
-    public String getCorreo()
-    {
+    public String getCorreo() {
         return correo;
     }
-
-    public void setCorreo(String correo)
-    {
+    public void setCorreo(String correo) {
         this.correo = correo;
     }
 }
