@@ -10,58 +10,55 @@ package modelo;
  *
  * @author simon
  */
-public class Computador 
-{
+
+public class Computador {
     private String marca;
     private String modelo;
     private String descripcionProblema;
     private short anioComprado;
 
-    public Computador(String marca, String modelo, String descripcionProblema, short anioComprado)
-    {
+    public Computador(String marca, String modelo, String descripcionProblema, short anioComprado) {
         this.marca = marca;
         this.modelo = modelo;
         this.descripcionProblema = descripcionProblema;
         this.anioComprado = anioComprado;
     }
 
-    public String getMarca()
-    {
+    public String getMarca() {
         return marca;
     }
 
-    public void setMarca(String marca)
-    {
+    public void setMarca(String marca) {
         this.marca = marca;
     }
 
-    public String getModelo()
-    {
+    public String getModelo() {
         return modelo;
     }
 
-    public void setModelo(String modelo)
-    {
+    public void setModelo(String modelo) {
         this.modelo = modelo;
     }
 
-    public String getDescripcionProblema()
-    {
+    public String getDescripcionProblema() {
         return descripcionProblema;
     }
 
-    public void setDescripcionProblema(String descripcionProblema)
-    {
+    public void setDescripcionProblema(String descripcionProblema) {
         this.descripcionProblema = descripcionProblema;
     }
 
-    public short getAnioComprado()
-    {
+    public short getAnioComprado() {
         return anioComprado;
     }
 
-    public void setAnioComprado(short anioComprado)
-    {
+    public void setAnioComprado(short anioComprado) {
         this.anioComprado = anioComprado;
+    }
+
+    // Sobreescritura requerida (SIA-6)
+    @Override
+    public String toString() {
+        return marca + " " + modelo + " (" + anioComprado + ") - Falla: " + descripcionProblema;
     }
 }
