@@ -55,6 +55,6 @@ public class Cliente
     
     @Override
     public String toString(){
-        return nombre + " (RUT: " + "Tel: " + numeroTelefono + ")";
+        return nombre + " (RUT: " + rut + ", Tel: " + numeroTelefono + ", Email: " + correo + ")";
     }
 }
