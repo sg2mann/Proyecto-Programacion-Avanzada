@@ -54,6 +54,7 @@ public class ConsolaView {
                 ejecutarOpcion(opcion);
             } catch (NumberFormatException e) {
                 System.out.println("Error: Por favor ingrese un número válido.");
+                opcion = -1;
             } catch (OrdenNoEncontradaException | StockInsuficienteException e) {
                 // Manejo de excepciones personalizadas (SIA-12)
                 System.out.println("Aviso del Sistema: " + e.getMessage());

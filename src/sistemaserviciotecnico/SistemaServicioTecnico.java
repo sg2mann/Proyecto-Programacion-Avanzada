@@ -129,7 +129,17 @@ public class SistemaServicioTecnico {
 
     public void eliminarComponenteDeOrden(int idOrden, String codigoComp) throws OrdenNoEncontradaException {
         OrdenTrabajo ot = buscarOrden(idOrden);
-        ot.eliminarComponente(codigoComp);
+        Componente compEnOrden = ot.buscarComponente(codigoComp);
+        
+        if (compEnOrden != null) {
+            // Restaurar el stock al inventario principal
+            Componente compInventario = inventarioStock.get(codigoComp);
+            if (compInventario != null) {
+                compInventario.setStock(compInventario.getStock() + compEnOrden.getStock());
+            }
+            // Eliminar el componente de la orden de trabajo
+            ot.eliminarComponente(codigoComp);
+        }
     }
     
     public void calcularFechaEstimadaEntrega(OrdenTrabajo orden) {

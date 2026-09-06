@@ -66,6 +66,11 @@ public class GestorArchivosCSV {
     public static void guardarOrdenes(Map<Integer, OrdenTrabajo> ordenes){
         try (PrintWriter escritor = new PrintWriter(new FileWriter(ARCHIVO_ORDENES))) {
             for (OrdenTrabajo ot : ordenes.values()) {
+                StringBuilder repuestosStr = new StringBuilder();
+                for (Componente c : ot.getComponentesRequeridos()) {
+                    repuestosStr.append(c.getCodigo()).append(":").append(c.getStock()).append("-");
+                }
+                
                 String linea = ot.getIdOrden() + ";" +
                                ot.getFechaRecepcion() + ";" +
                                ot.getAnalisisPrevio() + ";" +
@@ -78,7 +83,8 @@ public class GestorArchivosCSV {
                                ot.getComputadorMalo().getMarca() + ";" +
                                ot.getComputadorMalo().getModelo() + ";" +
                                ot.getComputadorMalo().getDescripcionProblema() + ";" +
-                               ot.getComputadorMalo().getAnioComprado();
+                               ot.getComputadorMalo().getAnioComprado() + ";" +
+                               repuestosStr.toString(); // Agregamos la columna 14 con los repuestos
                 
                 escritor.println(linea);
             }
@@ -99,7 +105,6 @@ public class GestorArchivosCSV {
             while ((linea = lector.readLine()) != null) {
                 String[] datos = linea.split(";");
                 
-                // Verificamos que estén las 13 columnas esperadas
                 if (datos.length >= 13) {
                     int id = Integer.parseInt(datos[0]);
                     String fecha = datos[1];
@@ -107,12 +112,25 @@ public class GestorArchivosCSV {
                     String entrega = datos[3];
                     String estado = datos[4];
                     
-                    // Reconstruimos los objetos anidados
                     Cliente cli = new Cliente(datos[5], datos[6], Integer.parseInt(datos[7]), datos[8]);
                     Computador pc = new Computador(datos[9], datos[10], datos[11], Short.parseShort(datos[12]));
                     
-                    // Armamos la orden y la guardamos en el mapa
                     OrdenTrabajo ot = new OrdenTrabajo(id, fecha, analisis, entrega, estado, cli, pc);
+                    
+                    if (datos.length >= 14 && !datos[13].isEmpty()) {
+                        String[] piezas = datos[13].split("-");
+                        for (String p : piezas) {
+                            if (p.contains(":")) {
+                                String[] info = p.split(":");
+                                String codigoPieza = info[0];
+                                int cantidad = Integer.parseInt(info[1]);
+                                
+                                // Método sobrecargado (SIA-5)
+                                ot.agregarComponente(codigoPieza, "Repuesto Asignado", 0.0, cantidad);
+                            }
+                        }
+                    }
+                    
                     ordenes.put(id, ot);
                 }
             }
