@@ -12,6 +12,7 @@ import modelo.Cliente;
 import modelo.Componente;
 import modelo.Computador;
 import modelo.OrdenTrabajo;
+import persistencia.GestorArchivosCSV;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -31,7 +32,13 @@ public class SistemaServicioTecnico {
     public SistemaServicioTecnico() {
         this.ordenes = new HashMap<>();
         this.inventarioStock = new HashMap<>();
-        cargarDatosIniciales(); // SIA-3: Datos de prueba iniciales
+        
+        GestorArchivosCSV.cargarInventario(this.inventarioStock);
+        GestorArchivosCSV.cargarOrdenes(this.ordenes);
+        
+        if (this.inventarioStock.isEmpty() && this.ordenes.isEmpty()){
+            cargarDatosIniciales(); // SIA-3: Datos de prueba iniciales
+        }
     }
     
     private void cargarDatosIniciales() {
@@ -155,5 +162,10 @@ public class SistemaServicioTecnico {
 
     public Map<String, Componente> getInventarioStock() {
         return inventarioStock;
+    }
+    
+    public void guardarDatosSistema() {
+        GestorArchivosCSV.guardarInventario(this.inventarioStock);
+        GestorArchivosCSV.guardarOrdenes(this.ordenes);
     }
 }

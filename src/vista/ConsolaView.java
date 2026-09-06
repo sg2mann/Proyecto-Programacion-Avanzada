@@ -96,7 +96,9 @@ public class ConsolaView {
                 listarOrdenesActivas();
                 break;
             case 0:
-                System.out.println("Cerrando sesión en consola...");
+                System.out.println("Guardando información en el archivo CSV...");
+                sistema.guardarDatosSistema();
+                System.out.println("Datos guardados exitosamente. Cerrando sesión en consola...");
                 break;
             default:
                 System.out.println("Opción inválida.");

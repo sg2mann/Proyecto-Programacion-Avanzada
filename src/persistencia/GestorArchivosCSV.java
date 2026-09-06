@@ -4,6 +4,10 @@
  */
 package persistencia;
 
+import modelo.Cliente;
+import modelo.Computador;
+import modelo.OrdenTrabajo;
+
 import modelo.Componente;
 import java.io.*;
 import java.util.Map;
@@ -14,6 +18,7 @@ import java.util.Map;
  */
 public class GestorArchivosCSV {
     private static final String ARCHIVO_INVENTARIO = "inventario.csv";
+    private static final String ARCHIVO_ORDENES = "ordenes.csv";
     
     // Método para guardar los datos al salir (escritura)
     public static void guardarInventario(Map<String, Componente> inventario) {
@@ -24,7 +29,7 @@ public class GestorArchivosCSV {
                                  comp.getPrecio() + ";" + comp.getStock());
             }
         } catch (IOException e) {
-            System.out.println("Error al guardar el archivo de inventario: " + e.getMessage())
+            System.out.println("Error al guardar el archivo de inventario: " + e.getMessage());
         }
     }
     
@@ -48,12 +53,71 @@ public class GestorArchivosCSV {
                     int stock = Integer.parseInt(datos[3]);
                     
                     // Se reconstruye el objeto y se mete al mapa
-                    Componente c = new Componente(codigo, nombre, precio, stock)
-                            inventario.put(codigo, c)
+                    Componente c = new Componente(codigo, nombre, precio, stock);
+                    inventario.put(codigo, c);
                 }
             }
         } catch (IOException e){
             System.out.println("Error al leer el archivo de inventario: " + e.getMessage());
+        }
+    }
+    
+    // Método para guardar órdenes al salor
+    public static void guardarOrdenes(Map<Integer, OrdenTrabajo> ordenes){
+        try (PrintWriter escritor = new PrintWriter(new FileWriter(ARCHIVO_ORDENES))) {
+            for (OrdenTrabajo ot : ordenes.values()) {
+                String linea = ot.getIdOrden() + ";" +
+                               ot.getFechaRecepcion() + ";" +
+                               ot.getAnalisisPrevio() + ";" +
+                               ot.getFechaEntregaEstimada() + ";" +
+                               ot.getEstado() + ";" +
+                               ot.getClienteAtendido().getRut() + ";" +
+                               ot.getClienteAtendido().getNombre() + ";" +
+                               ot.getClienteAtendido().getNumeroTelefono() + ";" +
+                               ot.getClienteAtendido().getCorreo() + ";" +
+                               ot.getComputadorMalo().getMarca() + ";" +
+                               ot.getComputadorMalo().getModelo() + ";" +
+                               ot.getComputadorMalo().getDescripcionProblema() + ";" +
+                               ot.getComputadorMalo().getAnioComprado();
+                
+                escritor.println(linea);
+            }
+        } catch (IOException e) {
+            System.out.println("Error al guardar las órdenes: " + e.getMessage());
+        }
+    }
+    
+    // Método para cargar las órdenes al iniciar
+    public static void cargarOrdenes(Map<Integer, OrdenTrabajo> ordenes) {
+        File archivo = new File(ARCHIVO_ORDENES);
+        if (!archivo.exists()) {
+            return; 
+        }
+
+        try (BufferedReader lector = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            while ((linea = lector.readLine()) != null) {
+                String[] datos = linea.split(";");
+                
+                // Verificamos que estén las 13 columnas esperadas
+                if (datos.length >= 13) {
+                    int id = Integer.parseInt(datos[0]);
+                    String fecha = datos[1];
+                    String analisis = datos[2];
+                    String entrega = datos[3];
+                    String estado = datos[4];
+                    
+                    // Reconstruimos los objetos anidados
+                    Cliente cli = new Cliente(datos[5], datos[6], Integer.parseInt(datos[7]), datos[8]);
+                    Computador pc = new Computador(datos[9], datos[10], datos[11], Short.parseShort(datos[12]));
+                    
+                    // Armamos la orden y la guardamos en el mapa
+                    OrdenTrabajo ot = new OrdenTrabajo(id, fecha, analisis, entrega, estado, cli, pc);
+                    ordenes.put(id, ot);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo de órdenes: " + e.getMessage());
         }
     }
 }
