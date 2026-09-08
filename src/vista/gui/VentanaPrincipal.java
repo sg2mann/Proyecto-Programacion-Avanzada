@@ -42,11 +42,34 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         tablaOrdenes.setModel(modeloTabla);
     }
     
+    private void actualizarTablaInventario() {
+        String[] columnas = {"Código", "Nombre", "Precio", "Stock"};
+        
+        javax.swing.table.DefaultTableModel modeloTabla = new javax.swing.table.DefaultTableModel(null, columnas) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; 
+            }
+        };
+
+        for (modelo.Componente c : sistema.getInventarioStock().values()) {
+            Object[] fila = new Object[4];
+            fila[0] = c.getCodigo();
+            fila[1] = c.getNombre();
+            fila[2] = c.getPrecio();
+            fila[3] = c.getStock();
+            modeloTabla.addRow(fila);
+        }
+        
+        tablaInventario.setModel(modeloTabla);
+    }
+    
     
     public VentanaPrincipal(SistemaServicioTecnico sistema) {
         this.sistema = sistema;
         initComponents();
         actualizarTablaOrdenes();
+        actualizarTablaInventario();
         setLocationRelativeTo(null);
         
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -71,22 +94,79 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane2 = new javax.swing.JTabbedPane();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tablaInventario = new javax.swing.JTable();
+        btnNuevoRepuesto = new javax.swing.JButton();
+        btnAumentarStock = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaOrdenes = new javax.swing.JTable();
-        jPanel2 = new javax.swing.JPanel();
         btnNuevaOrden = new javax.swing.JButton();
         btnModificarEstado = new javax.swing.JButton();
         btnEliminarOrden = new javax.swing.JButton();
         btnBuscarRut = new javax.swing.JButton();
         btnFiltrarActivas = new javax.swing.JButton();
         btnMostrarTodas = new javax.swing.JButton();
+        btnAgregarRepuesto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTabbedPane2.addTab("Inventario", jTabbedPane1);
+        tablaInventario.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(tablaInventario);
+
+        btnNuevoRepuesto.setText("Nuevo Repuesto");
+        btnNuevoRepuesto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoRepuestoActionPerformed(evt);
+            }
+        });
+
+        btnAumentarStock.setText("Aumentar Stock");
+        btnAumentarStock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAumentarStockActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnNuevoRepuesto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAumentarStock))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(238, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNuevoRepuesto)
+                    .addComponent(btnAumentarStock))
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Inventario", jPanel3);
 
         tablaOrdenes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -102,17 +182,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tablaOrdenes);
 
         jScrollPane2.setViewportView(jScrollPane1);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 45, Short.MAX_VALUE)
-        );
 
         btnNuevaOrden.setText("Nueva Orden");
         btnNuevaOrden.addActionListener(new java.awt.event.ActionListener() {
@@ -156,50 +225,55 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnAgregarRepuesto.setText("Agregar Repuesto");
+        btnAgregarRepuesto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarRepuestoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnBuscarRut)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnFiltrarActivas)
+                        .addGap(346, 346, 346)
+                        .addComponent(btnMostrarTodas))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnBuscarRut)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnFiltrarActivas)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnMostrarTodas))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnNuevaOrden)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnModificarEstado)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEliminarOrden))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(582, Short.MAX_VALUE))
+                        .addComponent(btnNuevaOrden)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnModificarEstado)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminarOrden)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAgregarRepuesto)))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBuscarRut)
-                    .addComponent(btnFiltrarActivas)
-                    .addComponent(btnMostrarTodas))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(43, 43, 43)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnMostrarTodas, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnFiltrarActivas)
+                        .addComponent(btnBuscarRut)))
+                .addGap(4, 4, 4)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregarRepuesto)
                     .addComponent(btnNuevaOrden)
                     .addComponent(btnModificarEstado)
                     .addComponent(btnEliminarOrden))
-                .addContainerGap(189, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Órdenes", jPanel1);
@@ -362,23 +436,123 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         actualizarTablaOrdenes();
     }//GEN-LAST:event_btnMostrarTodasActionPerformed
 
+    private void btnAgregarRepuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarRepuestoActionPerformed
+        // TODO add your handling code here:
+        int filaSeleccionada = tablaOrdenes.getSelectedRow();
+        
+        if (filaSeleccionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar una orden de la tabla primero.", "Advertencia", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int idOrden = (int) tablaOrdenes.getValueAt(filaSeleccionada, 0);
+        
+        String codPieza = javax.swing.JOptionPane.showInputDialog(this, "Ingrese el código del repuesto (ej: RAM-16):");
+        if (codPieza == null || codPieza.trim().isEmpty()) return;
+
+        try {
+            String cantStr = javax.swing.JOptionPane.showInputDialog(this, "Cantidad a utilizar:");
+            if (cantStr == null || cantStr.trim().isEmpty()) return;
+            
+            int cant = Integer.parseInt(cantStr.trim());
+
+            // SIA-12: Captura de excepciones personalizadas
+            sistema.agregarComponenteAOrden(idOrden, codPieza.trim(), cant);
+            actualizarTablaOrdenes(); // Actualiza para reflejar posible cambio en fecha de entrega
+            
+            javax.swing.JOptionPane.showMessageDialog(this, "Repuesto asignado y stock descontado exitosamente.");
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "La cantidad debe ser un número entero.", "Error de formato", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (excepciones.OrdenNoEncontradaException | excepciones.StockInsuficienteException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de negocio", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAgregarRepuestoActionPerformed
+
+    private void btnNuevoRepuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoRepuestoActionPerformed
+        // TODO add your handling code here:
+        String codigo = javax.swing.JOptionPane.showInputDialog(this, "Código del nuevo repuesto (ej: SSD-2TB):");
+        if (codigo == null || codigo.trim().isEmpty()) return;
+
+        // Validación de clave única en el HashMap
+        if (sistema.getInventarioStock().containsKey(codigo.trim())) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El código ingresado ya existe en el inventario.", "Clave duplicada", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String nombre = javax.swing.JOptionPane.showInputDialog(this, "Nombre o descripción del componente:");
+        if (nombre == null || nombre.trim().isEmpty()) return;
+
+        try {
+            String precioStr = javax.swing.JOptionPane.showInputDialog(this, "Precio unitario:");
+            if (precioStr == null || precioStr.trim().isEmpty()) return;
+            double precio = Double.parseDouble(precioStr.trim());
+
+            String stockStr = javax.swing.JOptionPane.showInputDialog(this, "Stock inicial:");
+            if (stockStr == null || stockStr.trim().isEmpty()) return;
+            int stock = Integer.parseInt(stockStr.trim());
+
+            // Instancia y almacenamiento en la colección secundaria
+            modelo.Componente nuevo = new modelo.Componente(codigo.trim(), nombre.trim(), precio, stock);
+            sistema.getInventarioStock().put(nuevo.getCodigo(), nuevo);
+            
+            actualizarTablaInventario();
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Fallo de validación: Precio y Stock deben ser numéricos.", "Error de formato", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnNuevoRepuestoActionPerformed
+
+    private void btnAumentarStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAumentarStockActionPerformed
+        // TODO add your handling code here:
+        int filaSeleccionada = tablaInventario.getSelectedRow();
+        
+        if (filaSeleccionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar un repuesto de la tabla de inventario primero.", "Advertencia", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Recupera la clave (Código) desde la columna 0 de la tabla
+        String codigo = (String) tablaInventario.getValueAt(filaSeleccionada, 0);
+        modelo.Componente comp = sistema.getInventarioStock().get(codigo);
+
+        try {
+            String cantStr = javax.swing.JOptionPane.showInputDialog(this, "Ingrese la cantidad de unidades a sumar al stock actual (" + comp.getStock() + "):");
+            if (cantStr == null || cantStr.trim().isEmpty()) return;
+            
+            int cantidadAgregar = Integer.parseInt(cantStr.trim());
+            if (cantidadAgregar < 0) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Operación inválida: No se pueden ingresar valores negativos.", "Error lógico", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Edita el estado del objeto en memoria
+            comp.setStock(comp.getStock() + cantidadAgregar);
+            actualizarTablaInventario();
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Fallo de validación: Debe ingresar un número entero.", "Error de formato", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAumentarStockActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregarRepuesto;
+    private javax.swing.JButton btnAumentarStock;
     private javax.swing.JButton btnBuscarRut;
     private javax.swing.JButton btnEliminarOrden;
     private javax.swing.JButton btnFiltrarActivas;
     private javax.swing.JButton btnModificarEstado;
     private javax.swing.JButton btnMostrarTodas;
     private javax.swing.JButton btnNuevaOrden;
+    private javax.swing.JButton btnNuevoRepuesto;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTable tablaInventario;
     private javax.swing.JTable tablaOrdenes;
     // End of variables declaration//GEN-END:variables
 }
