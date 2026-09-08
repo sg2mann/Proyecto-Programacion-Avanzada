@@ -35,8 +35,12 @@ public class Main {
                 vistaConsola.iniciar();
                 break;
             case "2":
-                System.out.println("\n[Aviso] La interfaz gráfica se abrirá en la siguiente etapa.");
-                // new VentanaPrincipal(sistema).setVisible(true);
+                System.out.println("Iniciando interfaz gráfica");
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        new vista.gui.VentanaPrincipal(sistema).setVisible(true);
+                    }
+                });
                 break;
             default:
                 System.out.println("Opción no válida. Cerrando aplicación.");
