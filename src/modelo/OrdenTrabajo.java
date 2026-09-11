@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package modelo;
 
@@ -10,9 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author simon
+ * @archivo : OrdenTrabajo.java
+ * @Project : Sistema Servicio Tecnico de Computadores
+ * @Descripcion : Registra una solicitud de reparación, vinculando al cliente, el equipo afectado, los componentes usados y el estado
+ * @author : Simón Guzmán, Cristobal Sazo
+ * @Lenguaje : Java
+ * @Fecha : 15-08-26
  */
+
 public class OrdenTrabajo 
 {
     private int idOrden;

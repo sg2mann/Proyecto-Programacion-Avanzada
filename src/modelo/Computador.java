@@ -1,14 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package modelo;
 
 /**
- *
- * @author simon
+ * @archivo : Computador.java
+ * @Project : Sistema Servicio Tecnico de Computadores
+ * @Descripcion : Representa el equipo a reparar ingresado al servicio, detallando sus características y la falla reportada
+ * @author : Simón Guzmán, Cristobal Sazo
+ * @Lenguaje : Java
+ * @Fecha : 15-08-26
  */
 
 public class Computador {
