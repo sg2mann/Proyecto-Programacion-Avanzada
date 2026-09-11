@@ -99,6 +99,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         tablaInventario = new javax.swing.JTable();
         btnNuevoRepuesto = new javax.swing.JButton();
         btnAumentarStock = new javax.swing.JButton();
+        btnEliminarRepuesto = new javax.swing.JButton();
+        btnExportarExcel = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -140,30 +142,51 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnEliminarRepuesto.setText("Eliminar Repuesto");
+        btnEliminarRepuesto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarRepuestoActionPerformed(evt);
+            }
+        });
+
+        btnExportarExcel.setText("Exportar a Excel");
+        btnExportarExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarExcelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnNuevoRepuesto)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAumentarStock))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(238, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnExportarExcel)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(btnNuevoRepuesto)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnAumentarStock)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEliminarRepuesto))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(304, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(14, 14, 14)
+                .addComponent(btnExportarExcel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNuevoRepuesto)
-                    .addComponent(btnAumentarStock))
-                .addContainerGap(39, Short.MAX_VALUE))
+                    .addComponent(btnAumentarStock)
+                    .addComponent(btnEliminarRepuesto))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Inventario", jPanel3);
@@ -254,7 +277,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                         .addComponent(btnEliminarOrden)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAgregarRepuesto)))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,7 +296,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     .addComponent(btnNuevaOrden)
                     .addComponent(btnModificarEstado)
                     .addComponent(btnEliminarOrden))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Órdenes", jPanel1);
@@ -532,6 +555,47 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAumentarStockActionPerformed
 
+    private void btnEliminarRepuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarRepuestoActionPerformed
+        // TODO add your handling code here:
+        int filaSeleccionada = tablaInventario.getSelectedRow();
+        
+        if (filaSeleccionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar un repuesto de la tabla de inventario primero.", "Advertencia", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Se extrae la clave (Código) de la primera columna
+        String codigo = (String) tablaInventario.getValueAt(filaSeleccionada, 0);
+        
+        int confirmacion = javax.swing.JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar el repuesto '" + codigo + "' del inventario de forma permanente?", "Confirmar Eliminación", javax.swing.JOptionPane.YES_NO_OPTION, javax.swing.JOptionPane.WARNING_MESSAGE);
+        
+        if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
+            // Eliminación directa del HashMap (SIA-8)
+            sistema.getInventarioStock().remove(codigo);
+            actualizarTablaInventario();
+        }
+    }//GEN-LAST:event_btnEliminarRepuestoActionPerformed
+
+    private void btnExportarExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarExcelActionPerformed
+        // TODO add your handling code here:
+        if (sistema.getInventarioStock().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El inventario está vacío. No hay datos que exportar.", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String nombreArchivo = javax.swing.JOptionPane.showInputDialog(this, "Ingrese el nombre del archivo:", "inventario_taller");
+        if (nombreArchivo == null || nombreArchivo.trim().isEmpty()) {
+            return;
+        }
+
+        try {
+            String rutaFisica = persistencia.GestorExcel.exportarInventario(sistema.getInventarioStock(), nombreArchivo.trim());
+            javax.swing.JOptionPane.showMessageDialog(this, "Archivo generado en:\n" + rutaFisica);
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al generar la planilla: " + e.getMessage(), "Error Crítico", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnExportarExcelActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -541,6 +605,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnAumentarStock;
     private javax.swing.JButton btnBuscarRut;
     private javax.swing.JButton btnEliminarOrden;
+    private javax.swing.JButton btnEliminarRepuesto;
+    private javax.swing.JButton btnExportarExcel;
     private javax.swing.JButton btnFiltrarActivas;
     private javax.swing.JButton btnModificarEstado;
     private javax.swing.JButton btnMostrarTodas;
