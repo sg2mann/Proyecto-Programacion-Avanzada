@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package persistencia;
 
 import modelo.Cliente;
@@ -13,9 +10,14 @@ import java.io.*;
 import java.util.Map;
 
 /**
- *
- * @author seba
+ * @archivo : GestorArchivosCSV.java
+ * @Project : Sistema Servicio Tecnico de Computadores
+ * @Descripcion : Maneja la lectura y escritura en archivos CSV para guardar y cargar los datos de las órdenes y el inventario
+ * @author : Sebastian Riveros
+ * @Lenguaje : Java
+ * @Fecha : 05-09-26
  */
+
 public class GestorArchivosCSV {
     private static final String ARCHIVO_INVENTARIO = "inventario.csv";
     private static final String ARCHIVO_ORDENES = "ordenes.csv";

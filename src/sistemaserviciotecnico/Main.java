@@ -1,15 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
+
 package sistemaserviciotecnico;
 import java.util.Scanner;
 import vista.ConsolaView;
 
 /**
- *
- * @author cris
+ * @archivo : Main.java
+ * @Project : Sistema Servicio Tecnico de Computadores
+ * @Descripcion : Punto de entrada de la aplicación que inicializa el sistema y arranca la interfaz gráfica
+ * @author : Sebastian Riveros, Cristobal Sazo, Simón Guzmán
+ * @Lenguaje : Java
+ * @Fecha : 15-08-26
  */
+
 public class Main {
 
     /**
@@ -24,7 +26,7 @@ public class Main {
         System.out.println("==========================================");
         System.out.println("Seleccione el modo de ejecución:");
         System.out.println("1. Modo Consola (Texto interactivo)");
-        System.out.println("2. Modo Gráfico (Ventana Swing - Próximamente)");
+        System.out.println("2. Modo Gráfico (Ventana Swing)");
         System.out.print("Opción: ");
         
         String opcion = scanner.nextLine().trim();

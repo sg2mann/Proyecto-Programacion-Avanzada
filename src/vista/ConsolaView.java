@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package vista;
 
 import excepciones.OrdenNoEncontradaException;
@@ -17,9 +14,14 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- *
- * @author cris
+ * @archivo : ConsolaView.java
+ * @Project : Sistema Servicio Tecnico de Computadores
+ * @Descripcion : Maneja la interfaz de usuario por terminal, mostrando los menús y capturando las entradas por teclado
+ * @author : Sebastian Riveros, Cristobal Sazo, Simón Guzmán
+ * @Lenguaje : Java
+ * @Fecha : 01-09-26
  */
+
 public class ConsolaView {
     private SistemaServicioTecnico sistema;
     private Scanner scanner;
