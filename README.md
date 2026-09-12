@@ -3,6 +3,14 @@
 Sistema desarrollado en Java para optimizar la gestión de atención de clientes, diagnóstico de equipos computacionesles, asignación de órdenes de trabajo y gestión de stock de repuestos en un taller de servicio técnico.
 El proyecto cuenta con un controlador central que gestiona la lógica de negocio, soporte parados interfaces de usuario(**Consola** e **Interfaz Gráfica Swing**), cálculo dinámico de tiempo de entrega, persistencia de archivos CSV y exportación de inventario a documentos Excel mediante Apache POI.
 
+## Instrucciones de Ejecución
+1. Clonar o descargar el repositorio.
+2. Abrir NetBeans:
+   Iniciar NetBeans, buscar la carpeta donde se guardó el programa y seleccionarla.
+3. Ejecutar la Aplicación:
+   Hacer click sobre el proyecto y correrlo.
+   En la consola se desplegará el menú inicial para seleccionar el modo de inicio (Consola o Ventana)
+
 ## Características Principales
 * **Gestión de Órdenes de Trabajo:**
   * Registro de órdenes vinculando cliente, equipo computacional y diagnóstico.
@@ -22,15 +30,7 @@ El proyecto cuenta con un controlador central que gestiona la lógica de negocio
   * **Modo Gráfico:** Ventanas interactivas desarrolladas con **Java Swing** (`java.awt.EventQueue`).
 
 ## Requisitos de Instalación
-* **Java Development Kit (JDK):** Versión 11 o superior.
+* **Java Development Kit (JDK):** Versión 8 o 11 (o superior).
 * **IDE:** NetBeans IDE (versión 12 o superior recomendada).
 * **Librerías externas:**
   * **Apache POI (`poi-ooxml`):** Requerido para la lectura/escritura de archivos Excel en la clase `GestorExcel`.
-
-## Instrucciones de Ejecución
-1. Clonar o descargar el repositorio.
-2. Abrir NetBeans:
-   Iniciar NetBeans, buscar la carpeta donde se guardó el programa y seleccionarla.
-3. Ejecutar la Aplicación:
-   Hacer click sobre el proyecto y correrlo.
-   En la consola se desplegará el menú inicial para seleccionar el modo de inicio (Consola o Ventana)
