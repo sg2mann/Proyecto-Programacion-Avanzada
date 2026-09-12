@@ -112,6 +112,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnFiltrarActivas = new javax.swing.JButton();
         btnMostrarTodas = new javax.swing.JButton();
         btnAgregarRepuesto = new javax.swing.JButton();
+        btnBuscarId = new javax.swing.JButton();
+        btnVerRepuestosOrden = new javax.swing.JButton();
+        btnEliminarRepuestoOrden = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -172,7 +175,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEliminarRepuesto))
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(304, Short.MAX_VALUE))
+                .addContainerGap(427, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,29 +258,57 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnBuscarId.setText("Buscar ID");
+        btnBuscarId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarIdActionPerformed(evt);
+            }
+        });
+
+        btnVerRepuestosOrden.setText("Ver Repuestos");
+        btnVerRepuestosOrden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerRepuestosOrdenActionPerformed(evt);
+            }
+        });
+
+        btnEliminarRepuestoOrden.setText("Quitar Repuesto");
+        btnEliminarRepuestoOrden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarRepuestoOrdenActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnBuscarRut)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnFiltrarActivas)
-                        .addGap(346, 346, 346)
-                        .addComponent(btnMostrarTodas))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(btnBuscarRut)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnBuscarId)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnFiltrarActivas)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnMostrarTodas))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnNuevaOrden)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnModificarEstado)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminarOrden)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAgregarRepuesto)))
-                .addContainerGap(129, Short.MAX_VALUE))
+                        .addGap(308, 308, 308)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAgregarRepuesto)
+                    .addComponent(btnEliminarRepuestoOrden)
+                    .addComponent(btnVerRepuestosOrden))
+                .addGap(0, 84, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,12 +318,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     .addComponent(btnMostrarTodas, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnFiltrarActivas)
-                        .addComponent(btnBuscarRut)))
+                        .addComponent(btnBuscarRut)
+                        .addComponent(btnBuscarId)))
                 .addGap(4, 4, 4)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnVerRepuestosOrden)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminarRepuestoOrden)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAgregarRepuesto)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgregarRepuesto)
                     .addComponent(btnNuevaOrden)
                     .addComponent(btnModificarEstado)
                     .addComponent(btnEliminarOrden))
@@ -596,6 +634,76 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnExportarExcelActionPerformed
 
+    private void btnBuscarIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarIdActionPerformed
+        // TODO add your handling code here:
+        String idStr = javax.swing.JOptionPane.showInputDialog(this, "Ingrese ID numérico de la orden a buscar:");
+        if (idStr == null || idStr.trim().isEmpty()) return;
+        
+        try {
+            int id = Integer.parseInt(idStr.trim());
+            modelo.OrdenTrabajo ot = sistema.buscarOrden(id);
+            // Reutiliza tu método sobrecargado pasándole una lista de un solo elemento (SIA-5/SIA-9)
+            actualizarTablaOrdenes(java.util.Collections.singletonList(ot));
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El ID debe ser numérico.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (excepciones.OrdenNoEncontradaException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage(), "Búsqueda fallida", javax.swing.JOptionPane.WARNING_MESSAGE);
+            actualizarTablaOrdenes(); // Restaura la tabla si no encuentra nada
+        }
+    }//GEN-LAST:event_btnBuscarIdActionPerformed
+
+    private void btnVerRepuestosOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerRepuestosOrdenActionPerformed
+        // TODO add your handling code here:
+        int filaSeleccionada = tablaOrdenes.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una orden de la tabla.", "Advertencia", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int idOrden = (int) tablaOrdenes.getValueAt(filaSeleccionada, 0);
+        try {
+            modelo.OrdenTrabajo ot = sistema.buscarOrden(idOrden);
+            java.util.List<modelo.Componente> repuestos = ot.getComponentesRequeridos();
+            
+            if (repuestos.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "La orden " + idOrden + " no tiene repuestos asignados.");
+                return;
+            }
+            
+            StringBuilder sb = new StringBuilder("Repuestos asignados a la orden " + idOrden + ":\n\n");
+            for (modelo.Componente c : repuestos) {
+                sb.append("- ").append(c.getCodigo()).append(" : ").append(c.getNombre())
+                  .append(" (Cant: ").append(c.getStock()).append(")\n");
+            }
+            javax.swing.JOptionPane.showMessageDialog(this, sb.toString(), "Detalle de Repuestos", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            
+        } catch (excepciones.OrdenNoEncontradaException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnVerRepuestosOrdenActionPerformed
+
+    private void btnEliminarRepuestoOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarRepuestoOrdenActionPerformed
+        // TODO add your handling code here:
+        int filaSeleccionada = tablaOrdenes.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una orden de la tabla.", "Advertencia", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int idOrden = (int) tablaOrdenes.getValueAt(filaSeleccionada, 0);
+        String codPieza = javax.swing.JOptionPane.showInputDialog(this, "Ingrese el código del repuesto a remover de la orden " + idOrden + ":");
+        if (codPieza == null || codPieza.trim().isEmpty()) return;
+
+        try {
+            sistema.eliminarComponenteDeOrden(idOrden, codPieza.trim());
+            actualizarTablaOrdenes();
+            actualizarTablaInventario(); // Actualiza porque el stock fue restituido al inventario central
+            javax.swing.JOptionPane.showMessageDialog(this, "Componente eliminado de la orden y stock restituido.");
+        } catch (excepciones.OrdenNoEncontradaException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarRepuestoOrdenActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -603,15 +711,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarRepuesto;
     private javax.swing.JButton btnAumentarStock;
+    private javax.swing.JButton btnBuscarId;
     private javax.swing.JButton btnBuscarRut;
     private javax.swing.JButton btnEliminarOrden;
     private javax.swing.JButton btnEliminarRepuesto;
+    private javax.swing.JButton btnEliminarRepuestoOrden;
     private javax.swing.JButton btnExportarExcel;
     private javax.swing.JButton btnFiltrarActivas;
     private javax.swing.JButton btnModificarEstado;
     private javax.swing.JButton btnMostrarTodas;
     private javax.swing.JButton btnNuevaOrden;
     private javax.swing.JButton btnNuevoRepuesto;
+    private javax.swing.JButton btnVerRepuestosOrden;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;

@@ -48,6 +48,10 @@ public class ConsolaView {
             System.out.println("9. Eliminar repuesto de una orden");
             System.out.println("--- LÓGICA DE NEGOCIO (SIA-9) ---");
             System.out.println("10. Ver órdenes activas pendientes en taller");
+            System.out.println("11. Nuevo repuesto (Inventario General)");
+            System.out.println("12. Aumentar stock de repuesto");
+            System.out.println("13. Eliminar repuesto (Inventario General)");
+            System.out.println("14. Exportar inventario a Excel");
             System.out.println("0. Salir");
             System.out.print("Seleccione una opción: ");
 
@@ -97,6 +101,18 @@ public class ConsolaView {
                 break;
             case 10:
                 listarOrdenesActivas();
+                break;
+            case 11:
+                nuevoRepuesto();
+                break;
+            case 12:
+                aumentarStock();
+                break;
+            case 13:
+                eliminarRepuestoInventario();
+                break;
+            case 14:
+                exportarExcel();
                 break;
             case 0:
                 System.out.println("Guardando información en el archivo CSV...");
@@ -235,6 +251,68 @@ public class ConsolaView {
         List<OrdenTrabajo> activas = sistema.filtrarOrdenesActivas();
         for (OrdenTrabajo ot : activas) {
             System.out.println("ID " + ot.getIdOrden() + " | Cliente: " + ot.getClienteAtendido().getNombre() + " | Estado: " + ot.getEstado() + " | Entrega: " + ot.getFechaEntregaEstimada());
+        }
+    }
+    
+    private void nuevoRepuesto() {
+        System.out.print("\nIngrese código del nuevo repuesto: ");
+        String codigo = scanner.nextLine().trim();
+        if (sistema.getInventarioStock().containsKey(codigo)) {
+            System.out.println("Error: El código ya existe en el inventario.");
+            return;
+        }
+        System.out.print("Nombre/Descripción: ");
+        String nombre = scanner.nextLine().trim();
+        System.out.print("Precio unitario: ");
+        double precio = Double.parseDouble(scanner.nextLine());
+        System.out.print("Stock inicial: ");
+        int stock = Integer.parseInt(scanner.nextLine());
+
+        Componente nuevo = new Componente(codigo, nombre, precio, stock);
+        sistema.getInventarioStock().put(codigo, nuevo);
+        System.out.println("Repuesto agregado al inventario exitosamente.");
+    }
+
+    private void aumentarStock() {
+        System.out.print("\nIngrese código del repuesto a modificar: ");
+        String codigo = scanner.nextLine().trim();
+        Componente comp = sistema.getInventarioStock().get(codigo);
+        if (comp == null) {
+            System.out.println("Error: Repuesto no encontrado en el inventario.");
+            return;
+        }
+        System.out.print("Cantidad a sumar al stock actual (" + comp.getStock() + "): ");
+        int cantidad = Integer.parseInt(scanner.nextLine());
+        if (cantidad < 0) {
+            System.out.println("Error: No se pueden ingresar valores negativos.");
+            return;
+        }
+        comp.setStock(comp.getStock() + cantidad);
+        System.out.println("Stock actualizado. Nuevo stock: " + comp.getStock());
+    }
+
+    private void eliminarRepuestoInventario() {
+        System.out.print("\nIngrese código del repuesto a eliminar del sistema: ");
+        String codigo = scanner.nextLine().trim();
+        if (sistema.getInventarioStock().remove(codigo) != null) {
+            System.out.println("Repuesto eliminado del inventario general.");
+        } else {
+            System.out.println("Error: Repuesto no encontrado.");
+        }
+    }
+
+    private void exportarExcel() {
+        if (sistema.getInventarioStock().isEmpty()) {
+            System.out.println("El inventario está vacío. No hay datos para exportar.");
+            return;
+        }
+        System.out.print("\nIngrese el nombre del archivo Excel a generar: ");
+        String nombreArchivo = scanner.nextLine().trim();
+        try {
+            String ruta = persistencia.GestorExcel.exportarInventario(sistema.getInventarioStock(), nombreArchivo);
+            System.out.println("Archivo Excel generado exitosamente en:\n" + ruta);
+        } catch (Exception e) {
+            System.out.println("Error al generar Excel: " + e.getMessage());
         }
     }
 }
