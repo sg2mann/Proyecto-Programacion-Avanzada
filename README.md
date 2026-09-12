@@ -4,12 +4,11 @@ Sistema desarrollado en Java para optimizar la gestión de atención de clientes
 El proyecto cuenta con un controlador central que gestiona la lógica de negocio, soporte parados interfaces de usuario(**Consola** e **Interfaz Gráfica Swing**), cálculo dinámico de tiempo de entrega, persistencia de archivos CSV y exportación de inventario a documentos Excel mediante Apache POI.
 
 ## Instrucciones de Ejecución
-1. Clonar o descargar el repositorio.
-2. Abrir NetBeans:
-   Iniciar NetBeans, buscar la carpeta donde se guardó el programa y seleccionarla.
-3. Ejecutar la Aplicación:
-   Hacer click sobre el proyecto y correrlo.
-   En la consola se desplegará el menú inicial para seleccionar el modo de inicio (Consola o Ventana)
+1. Descomprimir archivo **Informe Proyecto SIA - Sistema Servicio Técnico.zip** del proyecto, te quedarán dos archivos: el informe en pdf, y una carpeta con el proyecto.
+2. Abrir NetBeans.
+3. Selecciona **File -> Open Project...** en la esquina superior izquierda.
+4. Selecciona la carpeta del proyecto que fue descomprimida anteriormente.
+5. Ejecuta el proyecto con click derecho en el proyecto y **Run** o presionando F6.
 
 ## Características Principales
 * **Gestión de Órdenes de Trabajo:**
