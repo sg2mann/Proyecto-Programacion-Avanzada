@@ -126,7 +126,7 @@ public class OrdenTrabajo
     }
 
     public List<Componente> getComponentesRequeridos() {
-        return componentesRequeridos;
+        return new ArrayList<>(this.componentesRequeridos);
     }
 
     public void setComponentesRequeridos(List<Componente> componentesRequeridos) {

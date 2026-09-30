@@ -172,7 +172,11 @@ public class SistemaServicioTecnico {
     }
 
     public Map<String, Componente> getInventarioStock() {
-        return inventarioStock;
+        return new HashMap<>(this.inventarioStock);
+    }
+    
+    public Componente obtenerRepuestoInventario(String codigo) {
+        return this.inventarioStock.get(codigo);
     }
     
     public void guardarDatosSistema() {
