@@ -62,6 +62,12 @@ public class SistemaServicioTecnico {
 
         ordenes.put(ot1.getIdOrden(), ot1);
         ordenes.put(ot2.getIdOrden(), ot2);
+        
+        // Ejecución de prueba para requerimiento SIA-6
+        modelo.ServicioAdicional servicioLimpieza = new modelo.LimpiezaFisica(10000.0, true);
+        modelo.ServicioAdicional servicioDatos = new modelo.RespaldoDatos(15000.0, 1000);
+        System.out.println("SIA-6 -> Costo " + servicioLimpieza.getNombreServicio() + ": $" + servicioLimpieza.calcularCostoFinal());
+        System.out.println("SIA-6 -> Costo " + servicioDatos.getNombreServicio() + ": $" + servicioDatos.calcularCostoFinal());
     }
     
     // SIA-7 SIA-8
