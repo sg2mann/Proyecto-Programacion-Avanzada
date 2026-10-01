@@ -84,7 +84,7 @@ public class SistemaServicioTecnico {
     public OrdenTrabajo buscarOrden(int idOrden) throws OrdenNoEncontradaException {
         OrdenTrabajo ot = ordenes.get(idOrden);
         if (ot == null) {
-            throw new OrdenNoEncontradaException("La orden N° " + idOrden + " no existe.");
+            throw new OrdenNoEncontradaException(idOrden);
         }
         return ot;
     }
@@ -102,7 +102,9 @@ public class SistemaServicioTecnico {
 
     public boolean eliminarOrden(int idOrden) throws OrdenNoEncontradaException {
         if (!ordenes.containsKey(idOrden)) {
-            throw new OrdenNoEncontradaException("No se puede eliminar: orden N° " + idOrden + " no encontrada.");
+            throw new OrdenNoEncontradaException(idOrden);
+
+//throw new OrdenNoEncontradaException("No se puede eliminar: orden N° " + idOrden + " no encontrada.");
         }
         ordenes.remove(idOrden);
         return true;
@@ -119,12 +121,11 @@ public class SistemaServicioTecnico {
         Componente compStock = inventarioStock.get(codigoComp);
 
         if (compStock == null) {
-            throw new StockInsuficienteException("El componente " + codigoComp + " no está registrado en el inventario.");
+            throw new StockInsuficienteException(codigoComp, 0, cantidad);
         }
         if (compStock.getStock() < cantidad) {
-            throw new StockInsuficienteException("Stock insuficiente para " + compStock.getNombre() + 
-                    ". Disponibles: " + compStock.getStock() + ", Solicitados: " + cantidad);
-        }
+            throw new StockInsuficienteException(codigoComp, compStock.getStock(),cantidad);
+        }   
 
         // Descontar stock y asociar copia a la orden de trabajo
         compStock.setStock(compStock.getStock() - cantidad);

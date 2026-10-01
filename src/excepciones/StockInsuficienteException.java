@@ -11,7 +11,18 @@ package excepciones;
  */
 
 public class StockInsuficienteException extends Exception {
-    public StockInsuficienteException(String mensaje) {
-        super(mensaje);
+    private final String codigoComponente;
+    private final int stockDisponible;
+    private final int cantidadSolicitada;
+
+    public StockInsuficienteException(String codigoComponente, int stockDisponible, int cantidadSolicitada) {
+        super("Stock insuficiente para el componente: " + codigoComponente);
+        this.codigoComponente = codigoComponente;
+        this.stockDisponible = stockDisponible;
+        this.cantidadSolicitada = cantidadSolicitada;
     }
+
+    public int getStockDisponible() { return stockDisponible; }
+    public int getCantidadSolicitada() { return cantidadSolicitada; }
+    public String getCodigoComponente() { return codigoComponente; }
 }

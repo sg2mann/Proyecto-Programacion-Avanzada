@@ -11,7 +11,14 @@ package excepciones;
  */
 
 public class OrdenNoEncontradaException extends Exception {
-    public OrdenNoEncontradaException(String mensaje) {
-        super(mensaje);
+    private final int idOrdenBuscada;
+
+    public OrdenNoEncontradaException(int idOrdenBuscada) {
+        super("La orden de trabajo N° " + idOrdenBuscada + " no existe en el sistema.");
+        this.idOrdenBuscada = idOrdenBuscada;
+    }
+
+    public int getIdOrdenBuscada() {
+        return idOrdenBuscada;
     }
 }
