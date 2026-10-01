@@ -104,7 +104,6 @@ public class SistemaServicioTecnico {
         if (!ordenes.containsKey(idOrden)) {
             throw new OrdenNoEncontradaException(idOrden);
 
-//throw new OrdenNoEncontradaException("No se puede eliminar: orden N° " + idOrden + " no encontrada.");
         }
         ordenes.remove(idOrden);
         return true;
