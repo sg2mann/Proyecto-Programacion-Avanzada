@@ -161,10 +161,29 @@ public class ConsolaView {
             System.out.println("No hay órdenes registradas.");
             return;
         }
+        
+        // Cabecera de la tabla
+        System.out.printf("%-5s | %-12s | %-12s | %-20s | %-15s | %-12s\n", 
+                "ID", "Fecha", "RUT Cliente", "Equipo", "Estado", "Entrega");
+        System.out.println("-----------------------------------------------------------------------------------------");
+        
+        // Filas de la tabla
         for (OrdenTrabajo ot : lista) {
-            System.out.println("----------------------------------------");
-            System.out.println(ot);
+            String equipo = ot.getComputadorMalo().getMarca() + " " + ot.getComputadorMalo().getModelo();
+            // Truncar el nombre del equipo si es muy largo para no desarmar la tabla
+            if (equipo.length() > 20) {
+                equipo = equipo.substring(0, 17) + "...";
+            }
+            
+            System.out.printf("%-5d | %-12s | %-12s | %-20s | %-15s | %-12s\n",
+                    ot.getIdOrden(),
+                    ot.getFechaRecepcion(),
+                    ot.getClienteAtendido().getRut(),
+                    equipo,
+                    ot.getEstado(),
+                    ot.getFechaEntregaEstimada());
         }
+        pausarConsola();
     }
 
     private void buscarPorId() throws OrdenNoEncontradaException {
@@ -172,6 +191,7 @@ public class ConsolaView {
         int id = Integer.parseInt(scanner.nextLine());
         OrdenTrabajo ot = sistema.buscarOrden(id);
         System.out.println("Orden encontrada:\n" + ot);
+        pausarConsola();
     }
 
     private void buscarPorRut() {
@@ -186,6 +206,7 @@ public class ConsolaView {
                 System.out.println(ot);
             }
         }
+        pausarConsola();
     }
 
     private void modificarEstado() throws OrdenNoEncontradaException {
@@ -235,6 +256,7 @@ public class ConsolaView {
                 System.out.println(" - " + c);
             }
         }
+        pausarConsola();
     }
 
     private void eliminarRepuestoDeOrden() throws OrdenNoEncontradaException {
@@ -249,9 +271,32 @@ public class ConsolaView {
     private void listarOrdenesActivas() {
         System.out.println("\n--- Órdenes Activas (Demanda actual en taller) ---");
         List<OrdenTrabajo> activas = sistema.filtrarOrdenesActivas();
-        for (OrdenTrabajo ot : activas) {
-            System.out.println("ID " + ot.getIdOrden() + " | Cliente: " + ot.getClienteAtendido().getNombre() + " | Estado: " + ot.getEstado() + " | Entrega: " + ot.getFechaEntregaEstimada());
+        if (activas.isEmpty()) {
+            System.out.println("No hay órdenes activas en este momento.");
+            return;
         }
+
+        // Cabecera de la tabla
+        System.out.printf("%-5s | %-12s | %-12s | %-20s | %-15s | %-12s\n", 
+                "ID", "Fecha", "RUT Cliente", "Equipo", "Estado", "Entrega");
+        System.out.println("-----------------------------------------------------------------------------------------");
+        
+        // Filas de la tabla
+        for (OrdenTrabajo ot : activas) {
+            String equipo = ot.getComputadorMalo().getMarca() + " " + ot.getComputadorMalo().getModelo();
+            if (equipo.length() > 20) {
+                equipo = equipo.substring(0, 17) + "...";
+            }
+            
+            System.out.printf("%-5d | %-12s | %-12s | %-20s | %-15s | %-12s\n",
+                    ot.getIdOrden(),
+                    ot.getFechaRecepcion(),
+                    ot.getClienteAtendido().getRut(),
+                    equipo,
+                    ot.getEstado(),
+                    ot.getFechaEntregaEstimada());
+        }
+        pausarConsola();
     }
     
     private void nuevoRepuesto() {
@@ -314,5 +359,10 @@ public class ConsolaView {
         } catch (Exception e) {
             System.out.println("Error al generar Excel: " + e.getMessage());
         }
+    }
+    
+    private void pausarConsola() {
+    System.out.println("\nPresione ENTER para continuar y volver al menú...");
+    scanner.nextLine();
     }
 }
