@@ -8,7 +8,8 @@ El proyecto cuenta con un controlador central que gestiona la lógica de negocio
 2. Abrir NetBeans.
 3. Selecciona **File -> Open Project...** en la esquina superior izquierda.
 4. Selecciona la carpeta del proyecto que fue descomprimida anteriormente.
-5. Ejecuta el proyecto con click derecho en el proyecto y **Run** o presionando F6.
+5. Si al abrir el proyecto en NetBeans aparece el aviso "Project Problems", haz clic en "Resolver Project Problems" y vuelve a enlazar cada una de las dependencias utilizando los archivos incluidos en la carpeta "lib" y luego la carpeta "poi-bin-5.2.3" del proyecto.
+6. Ejecuta el proyecto con click derecho en el proyecto y **Run** o presionando F6.
 
 ## Características Principales
 * **Gestión de Órdenes de Trabajo:**
